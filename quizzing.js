@@ -112,7 +112,7 @@ const Questionset = [
 function setTime()
 {
     ++min;
-    minuteLabel.innerHTML = 10-min;
+    minuteLabel.innerHTML = 9-min;
 }
 
 function setsec()
