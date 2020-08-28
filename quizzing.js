@@ -1,11 +1,19 @@
 const quiz = document.getElementById('quiz');
 const result = document.getElementById('results');
 const submit = document.getElementById('submit');
+let uname =document.getElementById("play");
+let minuteLabel = document.getElementById("min");
+let secondsLabel = document.getElementById("sec");
+let min = 0,sec=0;
+let sm;
+let ss;
 let i=0;
 let q=0;
+let score=0;
 let numcorrect=0;
 let answered=0;
-const Questions = [
+let Questions=[];
+const Questionset = [
 	{
 		question: "What does COVID-19 stand for?",
 		answers: {
@@ -98,13 +106,39 @@ const Questions = [
 			c: "People with certain underlying health conditions",
 			d: "European people"
 		},
-		correctAnswer: "b"
+		correctAnswer: "c"
 	}
 ]
+function setTime()
+{
+    ++min;
+    minuteLabel.innerHTML = 10-min;
+}
+
+function setsec()
+{
+    ++sec;
+	let s=59-pad(sec%60);
+	secondsLabel.innerHTML = 59-pad(sec%60);
+	if((min==10)&&(s==0))
+		showResults();
+}
+
+function pad(val)
+{
+    var valString = val + "";
+	if(valString.length < 1)
+	{
+	return "0" + valString;
+	}else{
+        return valString;
+    }
+}
 function checkans(c,n)
 {
 	console.log(n);
 	let x=document.getElementById(n).childNodes;
+	let tab=document.getElementById(n+11);
 	let j=0;
 	for (j = 0; j < x.length; j++) {
 		x[j].style.pointerEvents = 'none';
@@ -113,10 +147,16 @@ function checkans(c,n)
 	if(c.value==Questions[n]['correctAnswer'])
 	{	
 		c.style.backgroundColor="green";
+		tab.style.backgroundColor="green";
 		numcorrect++;
+		score+=5;
 	}
 	else
+	{
 		c.style.backgroundColor="red";
+		tab.style.backgroundColor="red";
+		score-=2;
+	}
 	answered++;
 	if(answered==10)
 		showResults();
@@ -150,39 +190,160 @@ function buildQuiz(){
 	}
 	document.querySelector("#qno").innerHTML=q+1+"/10";
 }
+function shuffle(array) {
+    var i = array.length,j = 0,temp;
+    while (i--) {
+		j = Math.floor(Math.random() * (i+1));
+		temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+    }
+    return array;
+}
 function startquiz(){
+	if(uname.value=='');
+	else{
+	localStorage.setItem("user", uname.value);
+	Questions=shuffle(Questionset);
+	sm=setInterval(setTime,60000);
+	ss=setInterval(setsec,1000);
 	document.body.style.backgroundColor="white";
 	buildQuiz();
+	let m=0;
+	for(m=0;m<2;m++)
+	{
+		let row=document.createElement("TR");
+		let d=0;
+		for(d=0;d<5;d++)
+		{	
+			let col=document.createElement("TD");
+			col.innerHTML=m*5+d+1;
+			col.id=m*5+d+11;
+			col.onclick=function(){moveto(col.id)};
+			col.style.backgroundColor="white";
+			row.appendChild(col);
+		}
+		document.getElementById("navbox").appendChild(row);
+	}
+	document.getElementById(11).style.backgroundColor="blue";
 	document.querySelector(".header").style.display="none";
 	document.querySelector(".quiz-container").style.display="block";
+	}
 }
 function prevq()
 {
-	if(q==1)
-		document.querySelector("#previous").style.display="none";
 	document.getElementById(q).style.display="none";
 	q--;
 	document.querySelector("#qno").innerHTML=q+1+"/10";
 	document.getElementById(q).style.display="block";
-	if(q<9)
+	check();
+}
+function moveto(n)
+{
+	document.getElementById(q).style.display="none";
+	q=n-11;
+	document.querySelector("#qno").innerHTML=q+1+"/10";
+	document.getElementById(q).style.display="block";
+	check();
+}
+function check()
+{
+	if(q==0)
+		document.querySelector("#previous").style.display="none";
+	else
+		document.querySelector("#previous").style.display="inline-block";
+	if(q==9)
+		document.querySelector("#next").style.display="none";
+	else
 		document.querySelector("#next").style.display="inline-block";
+	if(document.getElementById(q+11).style.backgroundColor=="white")
+		document.getElementById(q+11).style.backgroundColor="blue";
 }
 function nextq(){
-	if(q==8)
-		document.querySelector("#next").style.display="none";
 	document.getElementById(q).style.display="none";
 	q++;
 	document.querySelector("#qno").innerHTML=q+1+"/10";
 	document.getElementById(q).style.display="block";
-	if(q>0)
-		document.querySelector("#previous").style.display="inline-block";
+	check();
+}
+class scr 
+{
+  constructor(name,score)
+  {
+    this.name=name;
+    this.score=score;
+	this.date=new Date().toString().substr(4,21);
+  }
+}
+window.onload
+{
+  getlist();
+}
+function getlist()
+{
+  scores=JSON.parse(localStorage.getItem("scores"));
+  if(!scores)
+  {
+    scores=[];
+  }
+}
+let mn1 , sc1 , si , mn2 , sc2 , sj , ni , nj , lgt ;
+function sort (arr)
+{
+  lgt=arr.length;
+  for(let i=0;i<lgt;i++)
+  {
+    for(let j=i+1;j<lgt;j++)
+    {
+      let itj=arr[j].score;
+	  let iti=arr[i].score;
+      if(iti<itj)
+      {
+        ni=arr[i].name;
+        nj=arr[j].name;
+        arr[i].name=nj;
+        arr[j].name=ni;
+		ni=arr[i].date;
+        nj=arr[j].date;
+        arr[i].date=nj;
+        arr[j].date=ni;
+        arr[j].score=iti;
+        arr[i].score=itj;
+      }
+    }
+  }
+}
+function updat(uname)
+{
+	const p=new scr(uname,score);
+    scores.push(p);
+    sort (scores);
+    let str=JSON.stringify(scores);
+    localStorage.setItem("scores",str);
 }
 function showResults(){
+	clearInterval(ss);
+	clearInterval(sm);
 	let result=document.getElementById("results");
 	document.body.style.backgroundColor="#663399";
 	document.querySelector(".quiz-container").style.display="none";
 	result.style.display="block";
-	document.querySelector("#scoreboard").innerHTML="SCORE:"+numcorrect;
+	updat(uname.value);
+	document.querySelector("#scoreboard").innerHTML="Name:"+uname.value+"<br>SCORE:"+score;
+	let listn=document.querySelector(".highscore");
+	listn.innerHTML="HIGH SCORES";
+	let h=5;
+    if(scores.length<h)
+      h=scores.length;
+    for(let i=0;i<h;i++)
+    {
+      let nm=scores[i].name;
+      let sr=scores[i].score;
+	  let dt=scores[i].date;
+      let node=document.createElement('p');
+      node.innerHTML=i+1+". "+nm+":"+sr+" ["+dt+"]";
+      listn.appendChild(node);
+    }
 }
 
 submit.addEventListener('click',showResults);
