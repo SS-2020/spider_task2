@@ -1,0 +1,100 @@
+body{
+	background-color:orange;
+	text-align:center;
+}
+h1{
+	font-weight:bold;
+	color:green;
+}
+#description{
+	font-weight:bold;
+	font-size:25px;
+	font-style:italic;
+	color:blue;
+}
+.quiz-container{
+	display:none;
+	font-size:20px;
+}
+#results{
+	display:none;
+	padding-top:20px;
+	width: 500px;
+	padding: 10px;
+	border: solid black 2px;
+	background-color: white;
+	position:absolute;
+	left:33%;
+	top:15%;
+}
+#announce{
+	color:green;
+}
+#scoreboard{
+	padding: 30px;
+	border: solid red 2px;
+	cursor: pointer;
+	border-width: 10px;
+	background-color: orange;
+	color: blue;
+	font-weight: bold;
+}
+.header{
+	padding:40px;
+	font-size:30px;
+	text-align:center;
+}
+#top{
+	font-size:40px;
+	color:orange;
+	font-weight:bold;
+	border-bottom:4px dotted green;
+}
+#quiz{
+	height:475px;
+	background-color:pink;
+	padding:10px;
+	border: solid #663399 5px;
+	font-size:22px;
+}
+button{
+	cursor:pointer;
+	border-radius: 40%;
+	font-size:20px;
+}
+#start{
+	border-radius: 100%;
+	background-color:red;
+	padding:20px;
+	border:solid brown 3px;
+	color:white;
+}
+#next{
+	position:absolute;
+	top:85%;
+	left:45%;
+}
+#submit{
+	position:absolute;
+	top:85%;
+	left:80%;
+}
+#previous{
+	position:absolute;
+	top:85%;
+	left:5%;
+}	
+#ansopt{
+	padding-top :15px;
+	padding-bottom :15px;
+	font-size:20px;
+	font-style:italic;
+}
+.navigator{
+	padding :18px;
+	background-color:blue;
+	border: solid orange 2px;
+	color:white;
+	font-weight:bold;
+}
+

@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>Quiz on Covid-19</title>
+	<link rel="stylesheet" type="text/css" href="quizstyle.css">
+</head>
+<body>
+	<div class="header">
+		<h1>Welcome to the Quiz <br> on <br> <img src="images/covid_19.jpg" width="250" height="100"></h1>
+		<div id="description">
+			<br>Test your knowledge and become aware of all facts you need to know <br><br>
+		</div>
+		<button id="start" onclick="startquiz()" >START</button>
+	</div>
+	<div class="quiz-container">
+		<div id="top">
+			<img src="images/corona.png" width="45" height="45">
+			<label>QUIZ</label>
+		</div>
+		<p id="qno"></p>
+		<div id="quiz"></div>
+			<button class="navigator" id="previous" onclick="prevq()">Previous</button>
+			<button class="navigator" id="next" onclick="nextq()">Next</button>
+			<button class="navigator" id="submit">Submit Quiz</button>	
+	</div>
+	<div id="results" >
+		<h1 id="announce">You have completed the Quiz!</h1>
+		<img src="images/resultpage.jpeg" width="400" height="200"><br><br>
+		<button id="scoreboard"></button><br><br>
+		<button id="start" onclick="window.location.reload()"> REATTEMPT </button>
+	</div>
+	<script src="quizzing.js"></script>
+</body>
+</html>
