@@ -1,16 +1,17 @@
 body{
 	background-color:orange;
-	text-align:center;
 }
 h1{
 	font-weight:bold;
 	color:green;
+	text-align:center;
 }
 #description{
 	font-weight:bold;
 	font-size:25px;
 	font-style:italic;
 	color:blue;
+	text-align:center;
 }
 .quiz-container{
 	display:none;
@@ -18,14 +19,18 @@ h1{
 }
 #results{
 	display:none;
-	padding-top:20px;
-	width: 500px;
+	width: 650px;
 	padding: 10px;
 	border: solid black 2px;
 	background-color: white;
 	position:absolute;
-	left:33%;
-	top:15%;
+	left:28%;
+	text-align:center;
+}
+input{
+	width: 60%;
+	height: 34px;
+	padding: 6px 12px;
 }
 #announce{
 	color:green;
@@ -44,15 +49,36 @@ h1{
 	font-size:30px;
 	text-align:center;
 }
+#Time{
+	position: absolute;
+	top: 10%;
+	right:8%;
+	color: brown;
+}
+#navbox{
+	position:absolute;
+	top:30%;
+	right:3%;
+}
+td{
+	padding:4px;
+	width:30px;
+	height:30px;
+	margin:solid white 1px;
+	border:solid black 2px;
+	cursor:pointer;
+}
 #top{
 	font-size:40px;
 	color:orange;
 	font-weight:bold;
 	border-bottom:4px dotted green;
+	text-align:center;
 }
 #quiz{
-	height:475px;
+	height:450px;
 	background-color:pink;
+	width:60%;
 	padding:10px;
 	border: solid #663399 5px;
 	font-size:22px;
